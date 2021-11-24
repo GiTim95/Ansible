@@ -1,0 +1,17 @@
+---
+- hosts: serverSql
+  become: true
+
+  tasks:
+  - name: postgresql key
+    apt_key:
+      url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+      state: present
+    become: true
+
+  - name: install postgresql
+    apt:
+      name: postgresql
+      state: present
+      update_cache: yes
+    become: true
