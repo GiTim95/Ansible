@@ -1,0 +1,16 @@
+---
+- hosts: serverSql
+  become: true
+
+  tasks:
+  - name: install firewall
+    apt:
+      name: firewalld
+      state: present
+      update_cache: yes
+    become: true
+
+  - name: "Start and enable services"
+    service: name=firewalld state=staed enabled=yes
+    with_items:
+      - postgresql
