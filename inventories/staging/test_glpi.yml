@@ -1,0 +1,24 @@
+---
+- hosts: webserver
+  become: true
+  tasks:
+    - name: (GLPI) Create the GLPI user
+      user:
+        name: "glpi"
+        password: "glpi"
+        shell: /bin/bash
+
+    - name: (GLPI) Check if GLPI is already installed
+      stat:
+        path: /home/glpi/public_html/glpi
+      register: glpiinstalled
+
+    - name: (GLPI) Download the latest version and extract the archive to public_html
+      unarchive:
+        src: https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz
+        remote_src: yes
+        dest: /home/glpi/public_html/
+        owner: "glpi"
+        group: "glpi"
+      register: newglpi
+      when: not glpiinstalled.stat.exists

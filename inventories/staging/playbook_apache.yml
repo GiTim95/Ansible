@@ -3,4 +3,7 @@
   become: true
   tasks:
     - name: Installation apache
-      apt: name=apache2 update_cache=yes state=latest
+      apt:
+        name: apache2
+        update_cache:  yes
+        state: latest
