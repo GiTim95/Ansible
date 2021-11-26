@@ -1,9 +1,0 @@
----
-- hosts: serverSql
-  become: true
-
-  tasks:
-  - name: Install Utility software
-    apt: name={{item}} state=latest update_cache=yes
-    with_items:
-      - MySQL-python
