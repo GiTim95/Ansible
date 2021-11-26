@@ -1,6 +1,11 @@
 ---
 - hosts: webserver
   become: true
+  pre_tasks:
+      - name: Creates directory
+        file:
+          path: /home/glpi/public_html
+          state: directory
   tasks:
     - name: (GLPI) Create the GLPI user
       user:
@@ -22,3 +27,17 @@
         group: "glpi"
       register: newglpi
       when: not glpiinstalled.stat.exists
+
+    - name: (GLPI) Create the database
+      mysql_db:
+        name: "glpi"
+      delegate_to: "10.49.34.243"
+
+    - name: (GLPI) Create the database's user
+      mysql_user:
+        name: "glpi"
+        password: "glpi"
+        state: present
+        priv: 'glpi\_%.*:ALL'
+        host: "10.49.33.163"
+      delegate_to: "10.49.34.243"
