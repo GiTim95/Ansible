@@ -24,7 +24,7 @@
 
   - name: Write new configuration file
     template:
-      src: my.cnf
+      src: ../Conf_Files_BDD/my.cnf
       dest: /etc/mysql/my.cnf
       owner: mysql
       group: mysql
