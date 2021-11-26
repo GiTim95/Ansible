@@ -6,3 +6,34 @@
   - name: Installation heartbeat
     apt: name=heartbeat update_cache=yes state=latest
 
+  - name: Ajoute le fichier de configuration ha.cf
+    template:
+      src: ./ha.cf
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0644'
+      backup: yes
+
+  - name: Ajoute le fichier de configuration haresources
+    template:
+      src: ./haresources
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0644'
+      backup: yes
+
+  - name: Ajoute le fichier de configuration authkeys
+    template:
+      src: ./authkeys
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0644'
+      backup: yes
+
+  - name: Redémarrer le service Hearbeat
+    service:
+      name: heartbeat
+      state: restarted
