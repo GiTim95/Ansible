@@ -54,6 +54,6 @@
      - name: Ajout du serveur dans le fichier de configuration
        ansible.builtin.lineinfile:
              path: /etc/rsyslog.conf
-             line: '*.* @10.49.33.157:514'
+             line: '*.* @192.168.93.252:514'
 
 
