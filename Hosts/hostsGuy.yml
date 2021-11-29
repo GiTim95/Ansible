@@ -1,8 +1,24 @@
-[serverSql]
-10.49.34.243 ansible_user=user1
+---
+all:
+  children:
+    serverSql:
 
-[serverHttp]
-10.49.34.148 ansible_user=user1
+      hosts:
+        # 10.49.34.144:
+        #   ansible_user: tim1
+        10.49.34.243:
+          ansible_user: user1
 
-[ansible]
-localhost
+    serverSql2:
+      hosts:
+        10.49.34.148:
+          ansible_user: user1
+
+#[serverSql]
+#10.49.34.243 ansible_user=user1
+
+#[serverHttp]
+#10.49.34.148 ansible_user=user1
+
+#[ansible]
+#localhost

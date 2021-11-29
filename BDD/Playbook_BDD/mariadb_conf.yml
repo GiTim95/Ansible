@@ -22,14 +22,20 @@
     command: mysql_install_db --datadir=/data/db
     when: db_files.matched|int == 0
 
-  - name: Write new configuration file
-    template:
-      src: ../Conf_Files_BDD/my.cnf
-      dest: /etc/mysql/my.cnf
-      owner: mysql
-      group: mysql
-      mode: '0600'
-      backup: yes
+#  - name: Write new configuration file
+#    template:
+#      src: ./BDD/Conf_Files_BDD/my.cnf
+#      dest: /etc/mysql/my.cnf
+#      owner: mysql
+#      group: mysql
+#      mode: '0600'
+#      backup: yes
+
+#  - name: Ajouter des connexions au fichier de configuration
+#    ansible.builtin.lineinfile:
+#      path: /etc/mysql/mariadb.cnf
+#      regexp: '^(.*)input\(type="imudp" port="514"\)$'
+#      line: 'input(type="imudp" port="514")'
 
   - name: Start MariaDB
     service:
@@ -53,14 +59,12 @@
       login_password: password
       login_host: localhost
       state: present
-    when: is_root_password_set.rc == 0
 
   - name: Create user for myapp db
     mysql_user:
-      name: myapp_rw
+      name: ansibleuser
       password: password
       priv: myapp.*:SELECT,INSERT,UPDATE,DELETE
-      login_user:
+      login_user: ansibleuser
       root login_password: password
       state: present
-    when: is_root_password_set.rc == 0

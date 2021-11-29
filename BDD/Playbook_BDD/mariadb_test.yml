@@ -1,16 +1,25 @@
 ---
-- hosts: serverSql
+- hosts: serverSql2
   become: true
 
   tasks:
-    - name: Write new configuration file
-      template:
-        src: ../Conf_Files_BDD/my.cnf
-        dest: /etc/mysql/my.cnf
-        owner: root
-        group: root
-        mode: '0644'
-        backup: yes
+  - name: Create user with password, all database privileges and 'WITH GRANT OPTION' in db1 and db2
+    community.mysql.mysql_user:
+      state: present
+      name: ansibleuser
+      password: password
+      priv:
+        'db1.*': 'ALL,GRANT'
+        'db2.*': 'ALL,GRANT'
+
+#    - name: Write new configuration file
+#      template:
+#        src: ../Conf_Files_BDD/my.cnf
+#        dest: /etc/mysql/my.cnf
+#        owner: root
+#        group: root
+#        mode: '0644'
+#        backup: yes
 
   #- name: Create myapp database
   #  mysql_db:
