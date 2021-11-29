@@ -60,11 +60,11 @@
       login_host: localhost
       state: present
 
-  - name: Create user for myapp db
-    mysql_user:
-      name: ansibleuser
-      password: password
-      priv: myapp.*:SELECT,INSERT,UPDATE,DELETE
-      login_user: ansibleuser
-      root login_password: password
-      state: present
+#  - name: Create user for myapp db
+#    mysql_user:
+#      name: ansibleuser
+#      password: password
+#      priv: myapp.*:SELECT,INSERT,UPDATE,DELETE
+#      login_user: ansibleuser
+#      root login_password: password
+#      state: present
