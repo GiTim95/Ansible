@@ -1,5 +1,5 @@
 ---
-- hosts: serverSql
+- hosts: webserver
   become: true
 
   tasks:
@@ -30,7 +30,7 @@
       dest: /etc/heartbeat/
       owner: root
       group: root
-      mode: '0644'
+      mode: '0600'
       backup: yes
 
   - name: Redémarrer le service Hearbeat
