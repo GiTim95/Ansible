@@ -3,26 +3,35 @@
   become: true
 
   tasks:
-  - name: Restart MariaDB
+  - name: Install mariadb + dépendances
+     apt: name={{item}} state=latest update_cache=yes
+    with_items:
+      - mariadb-server
+      - mariadb-client
+      - python3-pip
+      - python3-dev
+      - python3-mysqldb
+
+  - name: Redémarrage de MariaDB
     service: name=mysql state=restarted
 
-  - name: Create MariaDB Directories
+  - name: Création des répértoires de MariaDB
     file: path=/data/MariaDB state=directory owner=mysql group=mysql recurse=yes
     with_items:
       - db
       - log
 
-  - name: Count files in /data/db
+  - name: Liste des fichiers sous /data/db
     find:
       path=/data/db
       patterns='\*'
     register: db_files
 
-  - name: Run mysql_install_db only if /data/db is empty
+  - name: Démarre mysql_install_db dans le cas où /data/db est vide | Initialise MariaDB
     command: mysql_install_db --datadir=/data/db
     when: db_files.matched|int == 0
 
-#  - name: Write new configuration file
+#  - name: Modification du fichier de configuration
 #    template:
 #      src: ./BDD/Conf_Files_BDD/my.cnf
 #      dest: /etc/mysql/my.cnf
@@ -31,28 +40,22 @@
 #      mode: '0600'
 #      backup: yes
 
-#  - name: Ajouter des connexions au fichier de configuration
-#    ansible.builtin.lineinfile:
-#      path: /etc/mysql/mariadb.cnf
-#      regexp: '^(.*)input\(type="imudp" port="514"\)$'
-#      line: 'input(type="imudp" port="514")'
-
-  - name: Start MariaDB
+  - name: Démarre MariaDB
     service:
       name=mysql
       state=started
 
-  - name: Is root password set?
+  - name: Vérrifie et enregiste si l'utilisateur root de mariadb a un mdp
     command: mysql -u root --execute "SELECT NOW()"
     register: is_root_password_set
     ignore_errors: yes
 
-  - name: Generate mysql root password
+  - name: Genère un mdp mysql pour l'utilisateur root
     shell: tr -d -c "a-zA-Z0-9" \< /dev/urandom | head -c 10
     register: mysql_root_password
     when: is_root_password_set.rc == 0
 
-  - name: Create myapp database
+  - name: Crée la bdd "myapp"
     mysql_db:
       name: myapp
       login_user: root
@@ -60,7 +63,7 @@
       login_host: localhost
       state: present
 
-#  - name: Create user for myapp db
+#  - name: Crée un utilisateur pour accéder à la bdd
 #    mysql_user:
 #      name: ansibleuser
 #      password: password

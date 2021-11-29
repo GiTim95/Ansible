@@ -16,3 +16,26 @@ Les outils utilisés pour mener à bien ce projet sont:
 - Heartbeat
 - Mariadb
 - Rsyslog
+
+Ordre d'éxécution des commandes :
+
+Vérifier les fichiers d'inventaire "host" sous Hosts/ et la correspondance avec les serveurs appelés dans les différents playbooks.
+Lancer le playbook Hosts/Playbook_Host/playbook_sshkey.yml pour permettre un accès admin sur les systèmes.
+
+Pour les serveurs Web
+- Webserver/Playbook_WEBSERVER/playbook_apache.yml
+- Webserver/Playbook_WEBSERVER/playbook_php.yml
+- Webserver/Playbook_WEBSERVER/playbook_glpi.yml
+- Webserver/Playbook_WEBSERVER/test_glpi.yml
+- Webserver/Playbook_WEBSERVER/test_glpi.yml
+- Webserver/Playbook_WEBSERVER/test_glpi.yml
+- Heartbeat/Playbook_Heatbeat/Playbook_Heartbeat.yml
+
+Pour les serveurs BDD
+- BDD/Playbook_BDD/playbook_mariadb_conf.yml
+- BDD/Playbook_BDD/playbook_iptables_ports.yml
+
+Pour le serveur Syslog
+- SYSLOG/Playbook_SYSLOG/playbook_syslog.yml
+
+

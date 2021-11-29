@@ -8,7 +8,7 @@
 
   - name: Ajoute le fichier de configuration ha.cf
     template:
-      src: ../Conf_Files_HeatBeat/ha.cf
+      src: ../Conf_Files_HeartBeat/ha.cf
       dest: /etc/heartbeat/
       owner: root
       group: root
@@ -17,7 +17,7 @@
 
   - name: Ajoute le fichier de configuration haresources
     template:
-      src: ../Conf_Files_HeatBeat/haresources
+      src: ../Conf_Files_HeartBeat/haresources
       dest: /etc/heartbeat/
       owner: root
       group: root
@@ -26,7 +26,7 @@
 
   - name: Ajoute le fichier de configuration authkeys
     template:
-      src: ../Conf_Files_HeatBeat/authkeys
+      src: ../Conf_Files_HeartBeat/authkeys
       dest: /etc/heartbeat/
       owner: root
       group: root
