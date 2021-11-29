@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: create my main user
+      user:
+        name: admin
+        password: admin
+        groups: sudo, wheel
+        append: yes
+    - name: deploy my main ssh public key to my main user
+      authorized_key:
+        user: admin
+        key: "{{ lookup('file', '/home/admin/.ssh/id_rsa.pub') }}"
