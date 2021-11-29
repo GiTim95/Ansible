@@ -1,0 +1,39 @@
+---
+- hosts: webserver
+  become: true
+
+  tasks:
+  - name: Installation heartbeat
+    apt: name=heartbeat update_cache=yes state=latest
+
+  - name: Ajoute le fichier de configuration ha.cf
+    template:
+      src: ../Conf_Files_HeatBeat/ha.cf
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0644'
+      backup: yes
+
+  - name: Ajoute le fichier de configuration haresources
+    template:
+      src: ../Conf_Files_HeatBeat/haresources
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0644'
+      backup: yes
+
+  - name: Ajoute le fichier de configuration authkeys
+    template:
+      src: ../Conf_Files_HeatBeat/authkeys
+      dest: /etc/heartbeat/
+      owner: root
+      group: root
+      mode: '0600'
+      backup: yes
+
+  - name: Redémarrer le service Hearbeat
+    service:
+      name: heartbeat
+      state: restarted

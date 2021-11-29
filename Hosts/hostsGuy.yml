@@ -2,7 +2,6 @@
 all:
   children:
     serverSql:
-
       hosts:
         # 10.49.34.144:
         #   ansible_user: tim1
@@ -18,6 +17,7 @@ all:
 #10.49.34.243 ansible_user=user1
 
 #[serverHttp]
+
 #10.49.34.148 ansible_user=user1
 
 #[ansible]
