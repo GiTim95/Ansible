@@ -26,9 +26,6 @@ Pour les serveurs Web
 - Webserver/Playbook_WEBSERVER/playbook_apache.yml
 - Webserver/Playbook_WEBSERVER/playbook_php.yml
 - Webserver/Playbook_WEBSERVER/playbook_glpi.yml
-- Webserver/Playbook_WEBSERVER/test_glpi.yml
-- Webserver/Playbook_WEBSERVER/test_glpi.yml
-- Webserver/Playbook_WEBSERVER/test_glpi.yml
 - Heartbeat/Playbook_Heatbeat/Playbook_Heartbeat.yml
 
 Pour les serveurs BDD
